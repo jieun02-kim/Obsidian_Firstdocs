@@ -178,7 +178,7 @@ Hulkeinstein/
 
   
 
-Hub 파일(`00_XXX_Hub.md`) 운영 규칙: [[0. Docs/Hub-운영-가이드]]
+Hub 파일(`00_XXX_Hub.md`) 운영 규칙: [[Hub-운영-가이드]]
 
   
 
