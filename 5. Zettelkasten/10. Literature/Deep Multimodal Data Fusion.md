@@ -1,0 +1,54 @@
+---
+type: literature
+source: "Fei Zhao, Chengcui Zhang, and Baocheng Geng. 2024. Deep Multimodal Data Fusion. ACM Computing Surveys 56, 9, Article 216 (April 2024), 36 pages."
+author: "Fei Zhao, Chengcui Zhang, Baocheng Geng (University of Alabama at Birmingham)"
+tags: [multimodal, data-fusion, survey, deep-learning]
+project: "[[Multi-modal Fusion]]"
+created: 2026-08-07
+updated: 2026-08-07
+---
+
+## 핵심 주장
+기존 멀티모달 데이터 퓨전 분류체계(early/intermediate/late/hybrid fusion)는 얕은 학습 시대의 산물로, representation learning·fusion·decision-making이 한 모델 안에 뒤섞이는 최신 딥러닝 구조를 설명하기엔 부족하다. 저자들은 **어떤 딥러닝 기법을 메인 메커니즘으로 쓰는가**를 기준으로 SOTA 모델을 5개 카테고리로 재분류하는 새로운 fine-grained taxonomy를 제안한다 (Fig. 5).
+
+## 5가지 카테고리
+
+### 1. Encoder-Decoder 기반
+- 3가지 하위 유형: raw-data-level fusion(입력 단계에서 결합, 모달리티 2개 정도에만 적합), hierarchical feature fusion(여러 계층에서 결합, 유연성 높음), decision-level fusion(디코더/분류기 출력 단계에서 결합, 해석은 쉽지만 한 모달리티 실패가 전체 성능을 깎아먹음)
+- reconstruction loss 기반 오토인코더(AE) 변형도 있음 — 각 모달리티 재구성 손실을 정규화 항으로 사용해 cross-modal 관계를 강제
+- 장점: 구조가 유연해서 새 모달리티 추가가 쉬움(sub-encoder branch만 추가), 인코더 weight 공유 가능 → 모달리티 수가 늘어도 연산비용이 급증하지 않음
+
+### 2. Attention 기반
+- Intra-modality self-attention(모달리티 내부 관계 탐색) vs Inter-modality cross-attention(모달리티 간 관계 탐색)으로 이분
+- Transformer가 이 둘을 결합한 대표 구조 — 인코더는 self-attention으로 intra 관계, 디코더는 cross-attention으로 inter 관계를 처리
+- 대형 사전학습 모델(LXMERT, ViLBERT, VideoBERT, Uniter 등)이 대부분 여기 속함(Table 1, 24개 모델 정리) — 다만 대부분 vision-language 조합에 편중되어 있고 다른 모달리티 조합용 사전학습 모델은 부족
+- Encoder-Decoder와 함께 모달리티 수 확장에 가장 유리한("Easy") 카테고리
+
+### 3. GNN 기반
+- 그래프처럼 비유클리드 구조의 관계형 데이터를 다룰 때 사용
+- 두 전략: (1) 개별 모달리티 표현학습에만 GNN을 쓰고 결과를 concat, (2) 애초에 그래프를 구성하는 단계에서 모달리티를 융합(같은 모달리티 노드끼리는 intra-modal edge, 같은 발화/이벤트의 다른 모달리티 노드끼리는 inter-modal edge)
+- 장점: 노드 간 관계를 직관적으로 활용 / 단점: 그래프 구성 과정이 태스크·데이터에 대한 사전지식에 크게 의존해 일반화가 어려움 ("Medium" 등급)
+
+### 4. GenNN(생성모델) 기반
+- GAN/VAE/Flow/Diffusion 등. **missing modality 문제 해결**에 특화 — 한 모달리티로 다른 모달리티를 합성(예: MRI→PET 합성 후 분류하는 TPA-GAN+PT-DCN 파이프라인)
+- 모달리티 간 의미적 상관관계를 정규화 역할(discriminator/loss)로 강제하는 데도 쓰임
+- 단점: 모달리티가 늘어날수록 generator/discriminator를 계속 추가해야 해서 구조가 급격히 복잡해짐 ("Hard" 등급)
+
+### 5. Other Constraint-based (coordinated representation)
+- 공통 잠재공간에 매핑하는 위 4가지와 달리, **각 모달리티 표현을 독립적으로 유지하되 유사성 제약(CCA, cosine distance, L2 등)**으로만 정렬
+- Tensor fusion network(Zadeh et al. 2017)가 대표적 — outer product로 inter+intra 관계를 동시에 포착하지만 모달리티 수가 늘면 차원이 폭발적으로 증가
+- 2~3개 모달리티에만 적합, 확장성이 가장 낮음 ("Hard" 등급)
+
+## 종합 비교 (Table 2, 3)
+- **일반화 기준(모달리티 3개 이상)**: Encoder-Decoder·Attention = Easy / GNN = Medium / GenNN·Other Constraint-based = Hard
+- 정량적으로는 대부분의 태스크에서 Attention 기반이 최고 성능, Encoder-Decoder는 별도 장치 없이도 안정적인 baseline 역할을 함
+
+## Future Directions
+1. **Missing/Noisy modality**: 대부분의 SOTA 모델이 "결측 없음"을 가정 → 모달리티별 상대적 중요도를 자동 학습하는 adaptive fusion, 중앙 fusion center 없이 동작하는 fully distributed fusion이 필요
+2. **데이터 부족**: 공개 멀티모달 데이터셋 자체가 여전히 부족
+3. **대형 사전학습 모델의 편중**: 현재 CV+NLP 조합에만 집중되어 있어 다른 분야용 사전학습 모델 개발 필요
+4. **해석가능성**: DNN이 블랙박스이기 때문에 (a) 통계적 신호처리와 딥러닝 결합, (b) human-in-the-loop 의사결정이 대안으로 제시됨
+
+## 메모
+- 방법론 자체보다 **"현재 나온 멀티모달 퓨전 기법들을 어떻게 분류할 것인가"에 대한 프레임워크 논문**에 가까움 — 내 연구(Multi-modal sensor fusion)에서 fusion 전략 후보를 좁힐 때 이 5분류 기준으로 스크리닝하는 용도로 쓰기 좋음
+- [[Multi-modal Time Series Analysis A Tutorial and Survey]]와 비교하면: 이 논문은 모달리티 조합 자체(vision+language, vision+sensor 등)를 축으로 분류하는 반면, 저 논문은 시계열을 중심에 놓고 다른 모달리티와의 상호작용 단계(fusion/alignment/transference × input/intermediate/output)를 축으로 분류함 → 서로 다른 축의 taxonomy라서 상호보완적으로 참고 가능

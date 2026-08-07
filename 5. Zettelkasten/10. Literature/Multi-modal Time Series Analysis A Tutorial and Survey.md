@@ -1,0 +1,143 @@
+---
+type: literature
+source: "Yushan Jiang, Kanghui Ning, Zijie Pan, Xuyang Shen, Jingchao Ni, Wenchao Yu, Anderson Schneider, Haifeng Chen, Yuriy Nevmyvaka, and Dongjin Song. 2025. Multi-modal Time Series Analysis: A Tutorial and Survey. In KDD '25 (31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2), August 3-7, 2025, Toronto, ON, Canada."
+author: "Yushan Jiang et al. (University of Connecticut, NEC Labs America, Morgan Stanley, University of Houston)"
+tags: [multimodal, time-series, survey, cross-modal-interaction]
+project: "[[Multi-modal Fusion]]"
+created: 2026-08-07
+updated: 2026-08-07
+---
+
+## Abstract
+
+최근 멀티모달 시계열 분석은 텍스트, 이미지, 실세상(Real-world) 출처의 구조화된 테이블 데이터 등 다양한 데이터 모달리티의 가용성이 높아짐에 따라 주요 연구 분야로 떠올랐습니다. 그러나 멀티모달 시계열의 효과적인 분석은 데이터의 이질성(heterogeneity), 모달리티 간 격차(modality gap), 정렬 불일치(misalignment), 그리고 내재된 노이즈로 인해 어려움을 겪고 있습니다.
+
+최근 멀티모달 시계열 기법의 발전은 딥러닝 기반의 교차 모달 상호작용(cross-modal interactions)을 통해 멀티모달 맥락을 활용함으로써 다양한 다운스트림 과제(downstream tasks)의 성능을 크게 향상시켰습니다. 본 튜토리얼 및 서베이에서는 **멀티모달 시계열 데이터셋과 방법론에 대한 체계적이고 최신의 개요를 제시**합니다.
+
+먼저 멀티모달 시계열 분석의 기존 과제와 본 연구의 동기, 그리고 기본적인 사전 지식을 간략히 소개합니다. 이어서 일반적인 파이프라인을 요약하고, 다양한 수준(입력, 중간, 출력 단계)에서 융합(fusion), 정렬(alignment), 이전(transference)을 아우르는 통일된 교차 모달 상호작용 프레임워크를 통해 기존 기법들을 분류하며 핵심 개념과 아이디어를 강조합니다.
+
+또한 일반 영역 및 특정 도메인에 맞춤화된 표준 시계열과 공간(spatial) 시계열 모두에 대한 실세상 응용 분야를 논의합니다. 마지막으로 실무자가 멀티모달 시계열을 탐색하고 활용하는 데 도움이 될 미래 연구 방향을 제시합니다.
+
+## Time series analysis
+
+다양한 현실 세계 시스템 전반에서 풍부한 시간적 역동성(temporal dynamics)을 보여주는 순차 데이터(sequential data)가 급격히 증가
+
+→ 머신러닝과 데이터 사이언스 분야에서 핵심적인 과제
+
+시계열 내의 복잡한 시간적 관계를 효과적으로 모델링하기 위한 다양한 기법들이 제안
+
+실제 현장에서 시계열 데이터는 고유의 시간적 역동성(temporal dynamics)을 넘어 외부 맥락(external contexts)과 자주 결합
+
+이러한 맥락 정보는 멀티모달(multi-modal) 형태 → 다양한 형태를 띄며 계열 분석을 위한 풍부한 의미론적 정보(semantic information)를 전달
+
+데이터 이질성(heterogeneity), 모달리티 간 격차(modality gap), 그리고 맥락적 관련성(contextual relevance) 측면에서 난제
+
+1. 서로 다른 모달리티는 독자적인 통계적 특성, 구조, 차원을 지니고 있어 특징 분포(feature distribution)와 의미론적 해석 간의 불일치를 유발
+이질적인 데이터를 하나의 통일된 표현 공간(unified representation space)으로 정렬 난제(non-trivial)
+2. 텍스트, 테이블, 또는 시각적 맥락 정보는 서로 다른 타임스텝(시간대)이나 세밀도(granularities, 예: 일단위/월단위 등)로 등장할 수 있음
+시간적 불일치(temporal misalignment)는 의미 있는 교차 모달 상호작용(cross-modal interactions)을 방해
+3. 실세상 데이터에는 상관관계 학습을 오도할 수 있는 불필요한 정보(노이즈)가 불가피하게 포함되어 있어 최선의 성능에 미치지 못하는 결과(suboptimal performance)를 초래 가능
+금융 분야에서 주식 시장 예측과 관련된 뉴스 기사에는 실제 시장 상황을 반영하지 않는 중복되거나 추측성 서술이 다수 포함되어 있는 경우가 많음
+
+⇒ 멀티모달 시계열 분석의 핵심 목표는 멀티모달 맥락으로부터 상호**보완적이고 유의미한 정보를 효과적으로 포착하여, 이를 예측이나 분석 과제에 잘 활용(leverage)**하는 것
+
+## Contributes
+
+- 40개 이상의 멀티모달 시계열 기법과 이에 대응하는 오픈소스 데이터셋을 체계적으로 분류 및 정리(catalog)
+- 독창적인 시각으로 기존 기법들을 통일된 교차 모달 상호작용(cross-modal interaction) 프레임워크로 분류, 입력/중간/출력 레벨에서의 융합(fusion), 정렬(alignment), 그리고 전이(transference)를 중점적으로 다룸
+- 멀티모달 시계열의 실제 현장 응용 사례(real-world applications)를 논의하고 유망한 미래 연구 방향을 제시
+
+## 2 Background and Our Scope
+
+### 2.2 Multi-modal Time Series Analysis
+
+멀티모달 시계열 분석은 시계열 데이터를 이를 보완해 주는 다른 형태의 데이터(모달리티)와 결합하여 모델링하는 것을 목표
+
+주로 **일반 시계열과 공간 시계열(spatial time series)**을 다룸 (공간 시계열의 그래프/공간 구조는 별도의 멀티모달로 치지 않고, 시계열 자체의 일부로 간주)
+
+실제 현장 맥락에서 나오는 멀티모달 입력값을 활용하여 보완적인 정보를 제공하는 기법에 초점 — 생성/검색 분야(입력→출력 모달리티 변환)는 이 서베이의 범위 밖
+
+## 3 Multi-modal Time Series Data
+
+### 3.1 Modalities
+
+- **테이블(Tabular):** 이벤트 로그, 거래 내역, 인구 통계 정보처럼 시간에 따라 인덱스가 부여된 표 형태 데이터
+- **텍스트(Text):** 임상 기록, 금융 보고서, 뉴스 기사, 소셜 미디어 게시물처럼 타임스탬프가 찍힌 도메인 특화 텍스트
+- **이미지(Image):** 사진, 의료 영상, 위성 이미지, 시계열로부터 생성된 시각적 표현
+- **그래프(Graph):** 시간에 따라 변화하는 개체 간 상호작용/구조적 의존성
+
+오디오는 특수한 시계열로 간주 (별도 모달리티로 다루지 않음)
+
+## 4 Cross-modal Interactions with Time Series
+
+시계열과 다른 모달리티 간 상호작용을 **융합(fusion), 정렬(alignment), 전이(transference)** 3가지로 정의하고, 각각이 프레임워크 내의 **입력(input), 중간(intermediate), 출력(output)** 단계에서 발생
+
+### 4.1 Fusion
+
+서로 다른 모달리티를 통합해 보완적 정보를 포착하는 과정
+
+1. **Input Stage:** 시계열, 테이블, 텍스트를 하나의 통일된 텍스트 프롬프트로 직접 통합한 뒤 LLM에 질의. instruction fine-tuning이나 사전학습 LLM의 zero-shot 추론 활용
+   - **TaTS**: 텍스트 임베딩을 시계열의 또 다른 수치 변수(추가 채널)처럼 다룸 → 굳이 시계열 모델 구조를 바꿀 필요 없이 텍스트를 수치 시계열과 같은 형태(차원)로 변환
+2. **Intermediate Stage:** 대부분의 기존 연구가 여기서 융합 수행. 각 모달리티 인코더가 원천 데이터를 공유 잠재 공간으로 매핑 후 표현을 더하거나(addition) 연결(concatenation)
+   - **더하기(Addition):** 잠재 공간 내 상호연결성 유지하며 공유 정보를 효과적으로 섞음. 두 벡터가 동일 차원일 때 일대일로 더함 — 정렬이 잘 되어있어야 함
+   - **연결하기(Concatenation):** 모달리티 고유 특성을 유지하며 결합 관계 포착 용이. 벡터 차원이 늘어나 파라미터·연산량 증가하지만 정보 손실 없음
+3. **Output Stage:** 서로 다른 모달리티가 최종 출력에 독립적으로 기여, 각자 고유한 예측 신호 유지
+   - **Time-MMD**: SOTA 시계열 예측 모델과 사전학습 언어모델의 예측값을 프로젝션 레이어로 end-to-end 융합
+   - **MOAT**: 2단계 프레임워크. 1단계에서 분해된 시계열+텍스트 임베딩으로 예측 생성, 2단계에서 MLP 기반 오프라인 종합으로 구성요소를 동적으로 융합
+   - **TimeCAP**: 멀티모달 예측기 + 사전학습 LLM 예측을 결합, gradient 기반 방식과 LLM 에이전트의 맥락 추론 간 시너지
+   - 장점: 유연성·견고성(robustness) / 단점: 추가 대응책 없이는 모달리티 간 보완 관계를 완전히 활용 못함
+
+### 4.2 Alignment
+
+서로 다른 모달리티가 통일된 학습 프레임워크로 통합될 때 관계가 잘 보존되고 의미론적으로 일관되도록 보장
+
+- **Input Level**: 결측값, 불규칙한 수집 주기, 서로 다른 데이터 해상도로 인한 시간적 비정렬을 완화하는 전처리 기술
+- **Output Level**: 명시적 논문은 없으나 출력 융합에 게이팅/어텐션을 결합하면 출력 정렬로 손쉽게 확장 가능
+- **Intermediate Level**: 가장 핵심적인 역할. 공통 요소 기술:
+  - **셀프 어텐션(Self-attention)**: 모든 모달리티에 걸쳐 결합적·방향성 없는(joint and undirected) 정렬. $\text{Attention}(E_{mm}) = \text{softmax}(QK^T/\sqrt{d_k})V$
+  - **크로스 어텐션(Cross-attention)**: 시계열이 쿼리(Query) 모달리티 역할을 해 다른 모달리티로부터 맥락 정보를 얻음. 시계열의 시간적 구조를 보존하면서 방향성 있는(directed) 정렬 제공
+  - **게이팅 메커니즘(Gating)**: 융합된 임베딩 내에서 시계열과 다른 모달리티의 영향력을 명시적으로 조절하는 파라미터 기반 필터링. $G = \sigma(W_g[E_{ts};E_c]+b_g), E = G \odot E_{ts} + (1-G) \odot E_c$
+  - **그래프 기반 정렬**: 그래프 모달리티가 있을 때 그래프 컨볼루션으로 관계적 구조와 명시적으로 정렬, 맥락 인지적 특징 전파 가능
+  - **학습 목적함수 기반**: MULAN — 대조 학습으로 모달리티 불변 표현 간 유사성은 최대화, 동일 모달리티 내 불변·고유 표현 간 유사성은 최소화
+  - **컴포넌트 출력 간 중간 정렬**: 시계열 모델과 LLM 에이전트 간 시너지 탐색. TimeXL은 예측·반추·다듬기 담당 3개 LLM 에이전트가 협력해 텍스트 노이즈를 식별하고 맥락을 다듬음
+
+### 4.3 Transference(전이)
+
+서로 다른 모달리티 간 맵핑 과정 — 하나의 모달리티로부터 다른 모달리티를 추론/번역/합성
+
+- **Input-level**: 모달리티 증강 역할. 메타 정보로 실세계 맥락을 서술하거나 사전학습 LLM으로 텍스트/그래프 맥락 생성. 데이터 부족·불균형 시나리오에 유용
+  - 활용 두 갈래: (1) 생성된 모달리티 임베딩이 표현 정렬을 통한 의미적 앵커 역할, (2) 사전학습 LLM에 추가 맥락 지침 제공(input fusion+prompting)
+- **Intermediate-level**: 모달리티 생성 과제의 초기 솔루션이거나 예측 과제를 위한 추론 매개체 역할
+  - **MATMCD**: 시계열로부터 초기 인과 그래프를 생성(중간 수준 전이) 후 텍스트 모달리티로 정교화
+  - Wang et al.: EEG 신호를 텍스트로 변환 후 사전학습 LLM으로 감정 분류 — zero-shot 결과
+- **Output-level**: 새로운 모달리티의 end-to-end 생성. 텍스트/이미지 기반 시계열 검색, EEG-텍스트 변환 등
+
+## 5 Applications
+
+### 5.1 Standard Time Series
+
+**Healthcare**: EHR 데이터의 검사 수치·임상 기록 상호작용(concatenation, attention), 도메인 특화 텍스트 인코더(ClinicalBERT, BioBERT) 활용. 오디오(호흡기 질환), ECG(대조학습으로 리포트-신호 페어링), EEG(2단계: EEG→텍스트 디코딩 후 감정 분류기)
+
+**Finance**: 주가 변동+기업 프로필+뉴스를 구조화된 LLM 프롬프트로 통합. GPT-4/Open LLaMA로 나스닥-100 예측이 계량경제 모델보다 우수. ChatGPT로 뉴스 기반 동적 주식관계 그래프 추론. Bamford et al.의 멀티모달 검색 프레임워크(대조학습으로 공유 잠재공간 정렬) — 텍스트/스케치로 금융 시계열 검색
+
+**Others**: 소매(상품 이미지+텍스트+구글 트렌드로 매출 예측), IoT(가스분석+적외선 이미지로 변압기 고장 진단, 로그 시퀀스를 시계열화), 비전(스켈레톤 행동 인식에 관절명 텍스트 임베딩 활용), 음성(AV-HuBERT, SpeechGPT)
+
+### 5.2 Spatial Time Series
+
+**교통**: LLaMA/Vicuna 기반으로 교통 데이터를 구조화된 프롬프트로 변환, 날씨·지리적 맥락 결합. CityGPT는 도시 모빌리티+도로망+인간행동을 지시어 튜닝으로 통합
+
+**환경**: VIMTS는 구조적 변분 근사로 결측 고차원 모달리티(위성 이미지)를 저차원 기상 시계열 특징으로 대치. LITE는 sparse MoE로 다양한 환경 변수를 통합 인코딩
+
+## 6 Future Research Directions
+
+- **Reasoning**: 시간적 추론+맥락적 이해를 통합하는 단일 프레임워크. RAG 시스템 개발, 시계열 모델과 언어 에이전트의 시너지
+- **Decision Making**: 자원 할당·위험 관리 등 하위 최적화 과제를 위한 적응적·해석가능·신뢰 가능한 의사결정 지원 시스템
+- **Domain Generalization**: 모달리티 특화 변동성을 포착하면서 도메인 불변 구성요소를 식별·보존. 각 모달리티 영향 분리(disentangle) 필요
+- **Robustness to Missing/Noisy Modalities**: 모달리티 특화 대치(imputation), 노이즈 저감, 관련성 정량화 전략 개발 필요
+- **Ethical Considerations**: 공정성 인식 기법(공정성 제약, 반사실적 분석, 대립적 편향 제거) 통합
+
+## 메모
+
+- Table 2(taxonomy)에 40개 이상 방법론이 modality/domain/task/interaction stage/large model/year/code로 정리되어 있음 — 내 연구 주제와 가까운 방법을 찾을 때 이 표를 먼저 훑는 게 효율적
+- [[Deep Multimodal Data Fusion]]과 비교하면: 이 논문은 시계열을 축으로 다른 모달리티와의 상호작용 **단계(input/intermediate/output) × 방식(fusion/alignment/transference)**을 분류 기준으로 삼는 반면, 저 논문은 모달리티 조합 자체를 축으로 분류함 → 두 taxonomy를 겹쳐보면 내 연구에서 어떤 fusion 전략이 시계열+다른 모달리티 조합에 적합한지 좁히기 좋음
+- Time-MMD, MOAT, TimeCAP, TimeXL 등 output-level fusion 계열 논문들은 실제 구현 시 참고할 만한 대표 사례 — 추후 각각 개별 Literature 노트로 확장할 가치 있음
