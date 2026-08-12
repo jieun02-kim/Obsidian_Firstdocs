@@ -8,7 +8,7 @@ impact_factor: "N/A (학회논문)"
 tags: [llm, time-series, classification, table-understanding, training-free, multimodal]
 project: "[[Multi-modal Fusion]]"
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-08-12
 ---
 
 # TableTime: Reformulating Time Series Classification as Training-Free Table Understanding with Large Language Models
@@ -90,3 +90,32 @@ Table understanding 기반 training-free 분류 프레임워크.
 1. MTSC를 위한 table understanding 패러다임을 제안하고, 이것이 기존 방법들의 병목을 완화하는 원리를 설명
 2. 이 패러다임 하에서 LLM의 추론 능력을 활용하는 training-free 프레임워크 **TableTime** 설계
 3. 10개 벤치마크 다변량 시계열 데이터셋에서 종합 실험을 수행해 table understanding 패러다임과 TableTime의 효과 검증
+
+
+## 2 Related Work
+
+### 2.1 Time Series Classification
+
+시계열 분류 방법론의 발전 흐름을 정리:
+
+1. **거리 기반(distance-based)**: DTW + K-NN — 시간적 왜곡(temporal distortion) 처리에는 효과적
+2. **앙상블(ensemble)**: HIVE-COTE — 여러 feature transformation과 classifier를 계층적 투표(hierarchical voting)로 결합해 분류 성능 향상
+3. **딥러닝 초기**: FCN(fully convolutional network), RNN — 원시 데이터에서 계층적 특징을 자동으로 학습, local/sequential dependency 포착에서 개선
+4. **딥러닝 발전**: InceptionTime — multi-scale convolution을 활용한 더 깊은 네트워크로 다양한 시간 스케일의 복잡한 패턴 인식 능력 향상
+5. **Transformer 기반**: long-range dependency와 global context 포착에 강점, 성능 한계를 계속 확장 중
+
+### 2.2 LLMs in Time Series Analysis
+
+LLM 기반 시계열 분석 접근을 두 갈래로 구분 (Intro의 prompt-based/retraining-based 구분과는 별개로, 여기서는 fine-tuning/generative modeling 축으로 재분류):
+
+- **Fine-tuning 방법**: Linear Fine-Tuning 등 — 사전학습 LLM과 시계열 전용 encoder를 결합, LLM의 언어적 능력으로 패턴 식별
+- **Generative modeling**: GPT 기반 forecasting(미래 시계열 시퀀스 예측), TEMPO(도메인 지식 통합)
+
+#### LLM 기반 시계열 분석의 4가지 한계 (Intro의 4가지 병목과 거의 동일한 내용 재확인)
+
+1. 시간적 의존성(temporal dependency) 및 채널별 특징 포착 어려움
+2. 수치형 시계열 데이터와 LLM 의미 공간 간 불일치
+3. 파인튜닝의 높은 계산 비용 (특히 대규모 적용 시)
+4. LLM의 추론 능력을 충분히 활용하지 못함
+
+→ 이 한계들을 해결하기 위해 table understanding 기반 패러다임인 **TableTime**을 제안한다는 흐름으로 Section 3(Preliminaries)·Section 4(The Proposed TableTime)로 연결됨.
