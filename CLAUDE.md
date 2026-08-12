@@ -139,11 +139,12 @@ GROUP BY file.link
 ## 주의사항
 
 ### .obsidian 폴더
-- `.obsidian/` 폴더는 사용자별 설정을 포함
-- Git에 커밋 시 신중하게 판단:
-  - `workspace.json`: 개인 워크스페이스 레이아웃 (보통 제외)
-  - `core-plugins.json`, `community-plugins.json`: 팀 공유 시 포함 권장
-  - `plugins/`: 플러그인 소스 코드 (팀 공유 시 포함 가능)
+- `.obsidian/` 폴더는 이 vault의 설정을 포함하며, **다른 PC에서 동일한 환경을 재현하기 위한 단일 진실 공급원**으로 관리합니다. 저장소를 clone/pull하면 아래 설정이 그대로 적용됩니다.
+- Git 추적 여부:
+  - 추적함: `app.json`, `appearance.json`, `core-plugins.json`, `community-plugins.json`, `hotkeys.json`, `graph.json`, `templates.json`, `plugins/*/`(소스코드 + `data.json` 실제 설정값)
+  - 제외함(`.gitignore`): `workspace.json`(개인 워크스페이스 레이아웃), `app-*.json`, `cache`
+- 새 PC에서 세팅하는 법: 저장소 clone → Obsidian에서 vault로 열기 → 커뮤니티 플러그인이 이미 `plugins/`에 있으므로 "커뮤니티 플러그인 사용" 활성화만 하면 설치된 플러그인·핫키·플러그인별 설정(`data.json`)까지 동일하게 적용됨
+- 플러그인 `data.json`을 새로 추가/변경할 때는 API 키나 토큰 같은 민감정보가 들어가지 않는지 커밋 전에 확인할 것
 
 ### 파일 작업
 - 마크다운 파일만 생성/수정
