@@ -21,3 +21,4 @@ updated: 2026-08-11
 ## 메모
 - 초록/PDF 1차 정리. PDF 자체는 "Under review as a conference paper at ICLR 2024"로 표기된 익명(double-blind) 버전이며, 저자 정보는 이후 공개된 OpenReview 페이지(https://openreview.net/forum?id=uRXxnoqDHH) 기준으로 보강함
 - [[Multi-modal Time Series Analysis A Tutorial and Survey]]에서 output-stage fusion의 대표 사례로 인용됨 — 1단계(모달리티별 decomposition+예측) → 2단계(MLP 기반 오프라인 종합)의 2단계 구조가 특징
+- 2단계(MLP 기반 오프라인 종합)에서 서로 다른 구성 요소들을 동적으로 융합하고, 상대적 기여도에 기반해 최종 예측을 산출
