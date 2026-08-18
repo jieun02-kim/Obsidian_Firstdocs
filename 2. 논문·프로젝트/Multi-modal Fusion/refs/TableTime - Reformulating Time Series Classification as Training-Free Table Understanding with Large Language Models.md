@@ -211,7 +211,7 @@ LLM이 사전학습으로 방대한 지식을 갖고 있어도 프롬프트 설�
 #### 4.3.1 Positive Sample Guidance
 
 테스트 샘플마다 학습 데이터에서 k개의 최근접 이웃을 검색 (원문 수식):
-
+![[Pasted image 20260818124208.png]]
 N(X_test) = TopK(D_train, F_dist(X_test, X_i))
 
 - TopK: 테스트 인스턴스와 거리가 가장 가까운 k개 샘플 선택
