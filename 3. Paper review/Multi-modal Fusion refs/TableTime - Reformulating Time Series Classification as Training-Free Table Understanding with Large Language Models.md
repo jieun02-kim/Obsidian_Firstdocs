@@ -86,7 +86,6 @@ Table understanding 기반 training-free 분류 프레임워크.
 - **neighbor-assisted enhancement + multi-path reasoning**을 포함한 프롬프트로 LLM 추론 능력을 최대한 활용
 
 ### Contributions
-
 1. MTSC를 위한 table understanding 패러다임을 제안하고, 이것이 기존 방법들의 병목을 완화하는 원리를 설명
 2. 이 패러다임 하에서 LLM의 추론 능력을 활용하는 training-free 프레임워크 **TableTime** 설계
 3. 10개 벤치마크 다변량 시계열 데이터셋에서 종합 실험을 수행해 table understanding 패러다임과 TableTime의 효과 검증

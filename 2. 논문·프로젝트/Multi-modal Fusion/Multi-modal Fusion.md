@@ -30,5 +30,5 @@ tags: []
 
 ## 참고 자료
 - [[TF-Transformer 아이디어]]
-- refs/ 폴더 — 관련 논문 레퍼런스 정리
+- `3. Paper review/Multi-modal Fusion refs/` — 관련 논문 레퍼런스 정리 (프로젝트 폴더가 아닌 `3. Paper review`로 이전됨)
 - 진행 요약/ — Z: 드라이브 등 실제 작업 디렉터리를 요청 시점에 스냅샷 요약

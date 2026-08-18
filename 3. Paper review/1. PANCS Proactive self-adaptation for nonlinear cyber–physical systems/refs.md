@@ -5,7 +5,7 @@ updated: 2026-08-18
 
 # refs
 
-[[1. PANCS Proactive self-adaptation for nonlinear cyber–physical systems]]의 References 전체를 정리한다. vault 안에 별도 노트가 있으면 "노트" 칸에 링크하고, 없으면 `-`로 둔다. 나중에 실제로 그 논문을 읽거나 상세 내용을 정리하게 되면, 여기 표를 고치지 말고 별도 노트를 새로 만들어서 "노트" 칸에 링크만 추가한다.
+[[1. PANCS Proactive self-adaptation for nonlinear cyber–physical systems]]의 References.
 
 | 논문 | 관계성 | 노트 |
 |---|---|---|

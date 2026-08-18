@@ -1,3 +1,4 @@
+프로젝트: [[Multi-modal Fusion]]
 
 [[Multi-modal Time Series Analysis A Tutorial and Survey]]
 FT-Transformer로 메타데이터 인코딩 후 cross-attention 적용 시, 시계열을 query로 두는 게 이 논문의 표준 패턴과 일치
