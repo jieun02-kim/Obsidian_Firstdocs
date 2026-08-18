@@ -4,7 +4,7 @@ vault 전체를 가로지르는 단일 진입점. todo와 최근 활동을 여�
 
 ```dataview
 TASK
-FROM ("1. 개인 공부" OR "2. 논문·프로젝트" OR "3. 일상" OR "0. 관리") AND -"0. 관리/Dashboard"
+FROM ("1. 개인 공부" OR "2. 논문·프로젝트" OR "3. Seminar" OR "4. 일상" OR "0. 관리") AND -"0. 관리/Dashboard"
 WHERE !completed
 GROUP BY file.link
 ```
@@ -25,7 +25,7 @@ SORT updated DESC
 
 ```dataview
 TABLE file.mtime AS "수정일"
-FROM "1. 개인 공부" OR "2. 논문·프로젝트" OR "3. 일상"
+FROM "1. 개인 공부" OR "2. 논문·프로젝트" OR "3. Seminar" OR "4. 일상"
 WHERE file.name != "Dashboard"
 SORT file.mtime DESC
 LIMIT 15

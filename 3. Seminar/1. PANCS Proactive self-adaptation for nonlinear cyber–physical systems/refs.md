@@ -1,0 +1,57 @@
+---
+type: refs
+updated: 2026-08-18
+---
+
+# refs
+
+[[1. PANCS Proactive self-adaptation for nonlinear cyber–physical systems]]의 References 전체를 정리한다. vault 안에 별도 노트가 있으면 "노트" 칸에 링크하고, 없으면 `-`로 둔다. 나중에 실제로 그 논문을 읽거나 상세 내용을 정리하게 되면, 여기 표를 고치지 말고 별도 노트를 새로 만들어서 "노트" 칸에 링크만 추가한다.
+
+| 논문 | 관계성 | 노트 |
+|---|---|---|
+| Adetola, DeHaan, Guay (2009) — Adaptive model predictive control for constrained nonlinear systems. Systems Control Lett. 58(5) | AMPC 정의의 기반 각주로 인용 (선형화를 통한 비선형 시스템 처리) | - |
+| Angelopoulos, Papadopoulos, Souza, Mylopoulos (2018) — Engineering self-adaptive software systems: From requirements to model predictive control. ACM TAAS 13(1) | 관련 연구: 제어이론을 SAS에 적용, 선형 시불변(LTI) 모델 사용 — CPS 비선형성엔 부적합하다고 비판됨 | - |
+| Ayala, Papadopoulos, Amor, Fuentes (2021) — ProDSPL: Proactive self-adaptation based on dynamic software product lines. J. Syst. Softw. 175 | 관련 연구(ProDSPL): 동적 소프트웨어 제품라인 기반 proactive 적응. 연속 동역학/비선형성엔 대체로 무관심, 실행시간도 수백ms~수분으로 CPS엔 부적합 | - |
+| Azari, Santini, Edrisi, Flammini (2025) — Self-adaptive fault diagnosis for unseen working conditions based on digital twins and domain generalization. Reliab. Eng. Syst. Saf. 254 | 내부 불확실성(결함) 원인 분류 인용 | - |
+| Barišić et al. (2022) — Multi-paradigm modeling for cyber–physical systems: A systematic mapping review. J. Syst. Softw. 183 | CPS는 물리/계산/네트워크 모델을 통합해야 한다는 근거로 인용 | - |
+| Broy, Schmidt (2014) — Challenges in engineering cyber-physical systems. Computer 47(2) | CPS 엔지니어링의 불확실성 문제 일반론 인용 | - |
+| Camilli, Mirandola, Scandurra (2021) — Runtime equilibrium verification for resilient cyber-physical systems. ACSOS 2021 | 센싱 한계로 인한 부분 지식 문제 인용 | - |
+| Chen, Jiao (2022) — A proactive self-adaptation approach for software systems based on environment-aware model predictive control. QRS 2022 | 관련 연구: 과거 데이터 기반 동적 베이지안 모델로 환경 변화를 반영한 MPC. Chen et al. (2024)의 토대가 됨 | - |
+| Chen, Li, Li, Jiao, Kang (2024) — Context-aware proactive self-adaptation: A two-layer model predictive control approach. ACM TAAS | 관련 연구: contextual goal model(CGM) + MPC 2계층 프레임워크. 목표 추론과 제어 최적화를 분리하지만 베이지안 모델·CGM 유지 비용이 큼 | - |
+| de Lemos et al. (2013) — Software engineering for self-adaptive systems: A second research roadmap | 자기적응 정의(환경/시스템/목표 인식 기반 행동·구조 변경) 인용 | - |
+| Edrisi, Perez-Palacin, Caporuscio, Giussani (2023) — Adaptive controllers and digital twin for self-adaptive robotic manipulators. SEAMS 2023 | 저자 자신들의 선행 연구, managing system의 시스템/컨트롤러 레벨 이중 운영 개념 인용 | - |
+| Edrisi, Perez-Palacin, Caporuscio, Mirandola (2025) — Approaching proactive self-adaptation in nonlinear cyber-physical systems. SEAMS 2025 | 이 논문이 확장하는 직전 선행 연구. PANCS 초기 버전 | - |
+| Gesser, Lima, Normey-Rico (2018) — Robust model predictive control: Implementation issues with comparative analysis. IFAC-PapersOnLine 51(25) | 비교 대상(Robust MPC, min–max/Tube MPC): 불확실성 집합을 오프라인에 특정해야 해서 PANCS의 런타임 불확실성 가정과 충돌, 과도한 보수성 문제 | - |
+| Ghahremani, Giese (2021) — Hybrid planning with receding horizon: A case for meta-self-awareness. ACSOS-C 2021 | 관련 연구, proactive 적응의 복잡성/성능/오예측 문제 논의에 인용 | - |
+| Gomes et al. (2025) — A nonlinear state-space model and control algorithm for a dynamic wireless power transfer system EV charger application. Control Eng. Pract. 158 | Section 10 DWPT 도메인 인스턴스화의 모델 출처 | - |
+| Gonzalez, Fiacchini, Alamo, Guzmán, Rodríguez (2011) — Online robust tube-based MPC for time-varying systems: A practical approach. Internat. J. Control 84(6) | Tube MPC의 온라인 재계산 오버헤드 문제 논의에 인용 | - |
+| Halima, Hachicha, Jemal, Kacem (2023) — Mape-k patterns for self-adaptation in cyber-physical systems. J. Supercomput. 79(5) | 분산 의사결정 생태계에서 decentralized self-adaptation 필요성 인용 | - |
+| Hielscher, Kazhamiakin, Metzger, Pistore (2008) — A framework for proactive self-adaptation of service-based applications based on online testing | proactive 적응 피드백 루프의 초기 개념(적응 전 self-adapt) 인용 | - |
+| Iqbal (2021) — Introduction to control systems | 비선형 미분방정식·선형화 관련 수식 정의(Eq. 1, 3)의 출처 | - |
+| Jetto, Orsini (2020) — A robust least squares based approach to min-max model predictive control | min-max 최적화의 보수성 문제 논의에 인용 | - |
+| Klös, Göthel, Glesner (2018) — Runtime management and quantitative evaluation of changing system goals in complex autonomous systems. J. Syst. Softw. 144 | 관련 연구: goal-aware CPS 프레임워크, 목표 만족도 정량 평가. 정량적 목표 모델 유지 비용이 고밀도 환경에서 지연 유발 | - |
+| Krupitzer, Roth, VanSyckel, Schiele, Becker (2015) — A survey on engineering approaches for self-adaptive systems. Pervasive Mob. Comput. 17 | proactive 적응 정의(예측 통찰 기반 사전 준비) 인용 | - |
+| Luo et al. (2022) — Online adaptation for autonomous unmanned systems driven by requirements satisfaction model. Softw. Syst. Model. 21(4) | 관련 연구(Captain 프레임워크): feed-forward/feedback 이중 루프 + MPC. 실시간성 위해 거친 설정(2초 샘플링 등) 사용, 급변 환경에 한계 | - |
+| Lynch, Park (2017) — Modern Robotics: Mechanics, Planning, and Control | Appendix B Ackermann 모델의 참고 문헌 | - |
+| Mayne, Rawlings, Rao, Scokaert (2000) — Constrained model predictive control: Stability and optimality. Automatica 36(6) | AMPC의 안정성·수렴성 보장이 제어이론 문헌에서 폭넓게 연구되어 왔다는 근거로 인용 | - |
+| Moreno, Cámara, Garlan, Schmerl (2015) — Proactive self-adaptation under uncertainty: a probabilistic model checking approach. FSE 2015 | 관련 연구 계열(Proactive Latency-aware Adaptation)의 초기 논문 | - |
+| Moreno, Camara, Garlan, Schmerl (2016) — Efficient decision-making under uncertainty for proactive self-adaptation. ICAC 2016 | 관련 연구: MDP 기반 유한 horizon 최적화로 proactive 적응 개시. 지연을 고려하지만 정보시스템 대상 | - |
+| Moreno, Cámara, Garlan, Schmerl (2018) — Flexible and efficient decision-making for proactive latency-aware self-adaptation. ACM TAAS 13(1) | 관련 연구: MDP를 오프라인에서 구성해 런타임 오버헤드 최소화. Table 1 비교 대상 | - |
+| Moreno, Papadopoulos, Angelopoulos, Cámara, Schmerl (2017) — Comparing model-based predictive approaches to self-adaptation: Cobra and PLA. SEAMS '17 | proactive 적응이 reactive 대비 위험·불확실성을 줄인다는 근거로 인용 | - |
+| Musil, Musil, Weyns, Bures, Muccini, Sharaf (2017) — Patterns for self-adaptation in cyber-physical systems | 자기적응 능력을 통한 CPS 대응 전략 일반론 인용 | - |
+| Norby, Tajbakhsh, Yang, Johnson (2024) — Adaptive complexity model predictive control. IEEE Trans. Robot. 40 | 선형화된 모델을 QP로 실시간 처리 가능하다는 근거로 인용 | - |
+| Ottesen (1997) — Modelling of the baroreflex-feedback mechanism with time-delay. J. Math. Biol. 36(1) | Section 10 Healthcare 도메인 인스턴스화(혈압 조절 모델)의 출처 | - |
+| Ottesen (2000) — Modelling the dynamical baroreflex-feedback control | 위와 동일, Healthcare 모델 출처 | - |
+| Pandey, Moreno, Cámara, Garlan (2016) — Hybrid planning for decision making in self-adaptive systems. SASO 2016 | 고품질 런타임 적응이 복잡한 계산/큰 탐색공간을 요구한다는 근거로 인용 | - |
+| Park, Delgado, Choi (2020) — Real-time characteristics of ROS 2.0 in multiagent robot systems: An empirical study. IEEE Access 8 | Execute 컴포넌트의 물리 하드웨어 상 예상 지연(sub-2ms) 근거로 인용 | - |
+| Pereira, Wahlberg, Pettersson, Mårtensson (2023) — Adaptive reference aware MPC for lateral control of autonomous vehicles. Control Eng. Pract. 132 | 밀접한 관련 연구: reference-aware AMPC로 자율주행 경로추종 컨트롤러 설계. PANCS는 AMPC를 도메인 특화 컨트롤러가 아닌 참조 아키텍처의 구성요소로 다룬다는 점에서 차별화 | - |
+| Rahideh, Shaheed, Huijberts (2008) — Stable adaptive model predictive control for nonlinear systems. American Control Conference 2008 | AMPC 안정성·수렴성 연구 인용 | - |
+| Rakovic, Kouvaritakis, Cannon, Panos, Findeisen (2012) — Parameterized tube model predictive control. IEEE Trans. Autom. Control 57(11) | Tube MPC의 다면체/타원체 근사가 비선형 CPS에서 다루기 힘들고 보수적이라는 논의에 인용 | - |
+| Rowell (2002) — State-space representation of LTI systems | 상태변수 정의(Section 5.1.2)의 참고 문헌 | - |
+| Vilchez, Troya, Camara (2024) — Towards proactive decentralized adaptation of unmanned aerial vehicles for wildfire tracking. SEAMS '24 | 반응이 늦으면 효과가 감소한다는 근거로 인용 | - |
+| Wang, Li, Yang (2024) — Adaptive spatial-model-based predictive control for complex distributed parameter systems. Adv. Eng. Inform. 59 | 선형화 모델을 실시간 QP로 처리 가능하다는 근거로 인용 | - |
+| Weyns (2020) — An Introduction to Self-Adaptive Systems: A Contemporary Software Engineering Perspective | PANCS 아키텍처가 따르는 자기적응 시스템 개념 모델(environment/managed system/managing system/goals)의 출처 | - |
+| Weyns, Andersson, Caporuscio, Flammini, Kerren, Löwe (2022) — A research agenda for smarter cyber-physical systems. J. Integr. Des. Process. Sci. 25(2) | CPS 적용 분야(헬스케어, 로보틱스, 스마트그리드 등) 일반론 인용 | - |
+| Weyns, Schmerl, Grassi, Malek, Mirandola, Prehofer, Wuttke, Andersson, Giese, Göschka (2013) — On patterns for decentralized control in self-adaptive systems | Section 9의 Hierarchical Control Pattern·Information Sharing Pattern 출처 | - |
+| Zacchia Lun, D'Innocenzo, Smarra, Malavolta, Di Benedetto (2019) — State of the art of cyber-physical systems security: An automatic control perspective. J. Syst. Softw. 149 | CPS 정의(하드웨어·소프트웨어 자원의 긴밀한 상호작용) 인용 | - |
+| Zheng, Li, Li (2024) — Stability guaranteed model predictive control with adaptive Lyapunov constraint. IEEE Trans. Autom. Sci. Eng. 21(1) | AMPC 안정성·수렴성 연구 인용 | - |
