@@ -25,4 +25,4 @@ updated: 2026-08-11
 - 코드 공개: https://github.com/iDEA-iSAIL-Lab-UIUC/TaTS
 
 ## 메모
-- 초록 기반 1차 정리. [[Multi-modal Time Series Analysis A Tutorial and Survey]]에서 input-stage fusion 사례(TaTS)로 인용된 논문 — 텍스트를 별도 인코더/크로스어텐션 없이 "추가 채널"로 다루는 가장 단순한 형태의 input-level fusion이라 baseline/비교군으로 검토할 가치 있음
+- 초록 기반 1차 정리. [[2. Multi-modal Time Series Analysis A Tutorial and Survey|Multi-modal Time Series Analysis A Tutorial and Survey]]에서 input-stage fusion 사례(TaTS)로 인용된 논문 — 텍스트를 별도 인코더/크로스어텐션 없이 "추가 채널"로 다루는 가장 단순한 형태의 input-level fusion이라 baseline/비교군으로 검토할 가치 있음

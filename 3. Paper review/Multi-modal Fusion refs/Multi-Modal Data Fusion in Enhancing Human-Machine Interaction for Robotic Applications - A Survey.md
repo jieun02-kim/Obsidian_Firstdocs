@@ -20,4 +20,4 @@ updated: 2026-08-11
 - 멀티모달 시스템에 쓰이는 기술들을 요약하며 마무리
 
 ## 메모
-- 초록 기반 1차 정리. HRI/HMI 관점에서 모달리티가 "융합되는가 아닌가"를 분류 기준으로 삼는 점은 [[Deep Multimodal Data Fusion]]의 5분류 taxonomy와는 다른 축(응용 도메인·입력 조합 중심)이라 상호보완적으로 참고 가능
+- 초록 기반 1차 정리. HRI/HMI 관점에서 모달리티가 "융합되는가 아닌가"를 분류 기준으로 삼는 점은 [[1. Deep Multimodal Data Fusion|Deep Multimodal Data Fusion]]의 5분류 taxonomy와는 다른 축(응용 도메인·입력 조합 중심)이라 상호보완적으로 참고 가능

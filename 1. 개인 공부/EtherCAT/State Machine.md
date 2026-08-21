@@ -1,10 +1,12 @@
 
 # EtherCAT 상태 점검 - 2 Layer 구조
 
-## 개요
+## 핵심 요약
 
-- CiA402 상태머신만으로 제어 가능 여부 판단 불가
-- 반드시 EtherCAT AL 상태(통신 계층) 먼저 확인 후 CiA402(응용 계층) 확인 순서
+- Layer 1(AL+WKC) 통과 = 통신 신뢰 가능 전제조건, 모든 슬레이브 공통
+- Layer 2(CiA402) = 서보 드라이브 전용, 실제 제어 가능 여부 판단
+- 순서: **Layer 1 확인 → 통과 시에만 Layer 2 판단 진입** (CiA402 상태머신만으로는 판단 불가)
+- RAON-RT의 SlaveKistFT.h가 "Layer 2 없이 바로 데이터 처리"하는 대표 케이스
 
 ---
 
@@ -150,12 +152,3 @@ if (slave_type == SERVO_DRIVE) {
     torque_x = EC_READ_S32(domain_pd + off_tx);
 }
 ```
-
----
-
-## 결론 한 줄 정리
-
-- Layer 1(AL+WKC) 통과 = 통신 신뢰 가능 전제조건, 모든 슬레이브 공통
-- Layer 2(CiA402) = 서보 드라이브 전용, 실제 제어 가능 여부 판단
-- 순서: **Layer 1 확인 → 통과 시에만 Layer 2 판단 진입**
-- RAON-RT의 SlaveKistFT.h가 "Layer 2 없이 바로 데이터 처리"하는 대표 케이스

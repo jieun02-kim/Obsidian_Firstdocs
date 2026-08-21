@@ -7,8 +7,9 @@ venue: "ScienceDirect (저널명 미확인)"
 impact_factor: "N/A (확인 필요)"
 tags: [fault-diagnosis, industrial-robot, sensor-fusion, survey]
 project: "[[Multi-modal Fusion]]"
+related_projects: ["[[웰콘 엣지 AI 기반 예측보전]]"]
 created: 2026-08-11
-updated: 2026-08-11
+updated: 2026-08-19
 ---
 
 ## 핵심 요약
@@ -18,3 +19,4 @@ updated: 2026-08-11
 ## 메모
 - 아직 원문을 읽지 않은 리뷰 예정 상태 (제목/설명 기반 1차 정리)
 - 출처: [ScienceDirect](https://www.sciencedirect.com/science/article/pii/S2590123024006522)
+- 산업 로봇·다축 장비의 고장 탐지·진단을 다루는 리뷰라 [[웰콘 엣지 AI 기반 예측보전]](예지보전, PdM)과도 관련성 있음 — 소유 프로젝트는 Multi-modal Fusion으로 유지하고, 웰콘 쪽에서는 링크로만 참조

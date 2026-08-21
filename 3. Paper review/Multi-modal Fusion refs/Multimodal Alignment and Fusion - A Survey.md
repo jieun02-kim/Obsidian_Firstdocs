@@ -21,4 +21,4 @@ updated: 2026-08-11
 - 확장성·강건성·범용성 향상을 위한 향후 연구 방향 제시
 
 ## 메모
-- 초록 기반 1차 정리. [[Deep Multimodal Data Fusion]]의 "메인 메커니즘(딥러닝 기법) 기준 5분류"와 비교하면, 이 논문은 구조(data/feature/output-level) × 방법론(statistical~LLM-based) 두 축으로 훨씬 세분화된 taxonomy를 제공 — 최신(2025) 서베이인 만큼 LLM-based fusion 등 최신 트렌드를 확인할 때 우선 참고할 만함
+- 초록 기반 1차 정리. [[1. Deep Multimodal Data Fusion|Deep Multimodal Data Fusion]]의 "메인 메커니즘(딥러닝 기법) 기준 5분류"와 비교하면, 이 논문은 구조(data/feature/output-level) × 방법론(statistical~LLM-based) 두 축으로 훨씬 세분화된 taxonomy를 제공 — 최신(2025) 서베이인 만큼 LLM-based fusion 등 최신 트렌드를 확인할 때 우선 참고할 만함

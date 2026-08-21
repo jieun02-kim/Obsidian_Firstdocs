@@ -1,7 +1,7 @@
 {
   "data_version": 2,
   "command_timeout": 5,
-  "templates_folder": "",
+  "templates_folder": "6. Templates",
   "templates_pairs": [],
   "trigger_on_file_creation_mode": "none",
   "auto_jump_to_cursor": false,
@@ -12,7 +12,7 @@
   "file_templates": [],
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
-  "enabled_templates_hotkeys": [],
+  "enabled_templates_hotkeys": ["6. Templates/텍스트 색상 강조.md", "6. Templates/배경색 강조.md", "6. Templates/토글.md"],
   "startup_templates": [],
   "intellisense_render": "1",
   "ignore_folders_on_creation": []

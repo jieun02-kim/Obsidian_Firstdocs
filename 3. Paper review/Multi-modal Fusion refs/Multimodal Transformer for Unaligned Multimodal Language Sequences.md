@@ -19,4 +19,4 @@ updated: 2026-08-11
 - 실험적으로 crossmodal attention 메커니즘이 모달리티 간 상관된 신호를 실제로 포착함을 확인
 
 ## 메모
-- 초록 기반 1차 정리. [[Multi-modal Time Series Analysis A Tutorial and Survey]]가 정리한 "Intermediate-level Alignment"의 cross-attention 항목과 직접 대응하는 원 논문 — 시계열/센서처럼 샘플링 레이트가 다른 모달리티를 명시적 정렬(interpolation) 없이 융합하는 대표 구현체로, 본 프로젝트의 비동기 센서 퓨전 설계 시 참고할 만함
+- 초록 기반 1차 정리. [[2. Multi-modal Time Series Analysis A Tutorial and Survey|Multi-modal Time Series Analysis A Tutorial and Survey]]가 정리한 "Intermediate-level Alignment"의 cross-attention 항목과 직접 대응하는 원 논문 — 시계열/센서처럼 샘플링 레이트가 다른 모달리티를 명시적 정렬(interpolation) 없이 융합하는 대표 구현체로, 본 프로젝트의 비동기 센서 퓨전 설계 시 참고할 만함

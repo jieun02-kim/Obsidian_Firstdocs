@@ -19,4 +19,4 @@ updated: 2026-08-11
 - 다양한 ablation study로 MEDAN의 효과 원인을 분석
 
 ## 메모
-- 초록 기반 1차 정리. [[Deep Multimodal Data Fusion]] 분류 기준으로는 "Attention 기반"의 대표적 encoder-decoder 결합 구조 — 질문(텍스트)이 이미지에 대해 cross-attention으로 질의하는 패턴은, 본 프로젝트에서 한 모달리티를 쿼리로 삼아 다른 모달리티를 참조하는 구조를 설계할 때 참고할 만한 사례
+- 초록 기반 1차 정리. [[1. Deep Multimodal Data Fusion|Deep Multimodal Data Fusion]] 분류 기준으로는 "Attention 기반"의 대표적 encoder-decoder 결합 구조 — 질문(텍스트)이 이미지에 대해 cross-attention으로 질의하는 패턴은, 본 프로젝트에서 한 모달리티를 쿼리로 삼아 다른 모달리티를 참조하는 구조를 설계할 때 참고할 만한 사례
