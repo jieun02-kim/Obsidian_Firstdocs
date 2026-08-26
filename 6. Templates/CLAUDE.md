@@ -16,4 +16,7 @@ Templater 설정: `templates_folder`가 이 폴더로 지정되어 있음.
 
 
 ## 사용자가 해야 할 것
-마지막 한 단계만 Obsidian에서 직접 해주셔야 해요 (제가 클릭은 못 하니까요): 설정 → Hotkeys → "Templater: Insert 6. Templates/텍스트 색상 강조" 검색 → 원하는 단축키 지정. 그러면 텍스트 선택 후 그 키만 누르면 바로 빨갛게 칠해집니다. 
+사용법 (마지막 한 단계만 Obsidian에서 직접):
+1. Obsidian 재시작 또는 설정 → 커뮤니티 플러그인에서 Templater 새로고침
+2. 설정 → Hotkeys → "Templater: Insert 6. Templates/밑줄" 검색
+3. 원하는 단축키 지정 (예: Ctrl+U)

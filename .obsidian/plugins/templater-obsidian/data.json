@@ -12,7 +12,7 @@
   "file_templates": [],
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": false,
-  "enabled_templates_hotkeys": ["6. Templates/텍스트 색상 강조.md", "6. Templates/배경색 강조.md", "6. Templates/토글.md"],
+  "enabled_templates_hotkeys": ["6. Templates/텍스트 색상 강조.md", "6. Templates/배경색 강조.md", "6. Templates/토글.md", "6. Templates/밑줄.md"],
   "startup_templates": [],
   "intellisense_render": "1",
   "ignore_folders_on_creation": []
