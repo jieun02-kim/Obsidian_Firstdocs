@@ -178,13 +178,20 @@ URDF
 - KDL/Pinocchio/RBDL 같은 spatial-algebra 기반 동역학 라이브러리(본 논문은 RBDL 사용)로 URDF에서 수치적으로 기구학·동역학량 계산: **RNEA**(역동역학, Coriolis-원심력·중력 항 계산), **ABA**(순동역학), **CRBA**(질량행렬 계산).
 
 ## V. Reconfigurable Software Architecture (재구성 가능한 소프트웨어 아키텍처)
-하드웨어의 재구성 가능성을 활용하려면 SW도 새 토폴로지에 자동으로 적응해야 함 — 조립 직후 바로 가동 가능한 "plug-and-work" 시스템. 3계층 구조:
+하드웨어의 재구성 가능성을 활용하려면 SW도 새 토폴로지에 자동으로 적응해야 함
+새로운 컨트롤러를 정의하거나 사용자의 입력 및 튜닝 없이도 필요한 모든 API에 접근할 수 있게
+
+조립 직후 바로 가동 가능한 "plug-and-work" 시스템. 3계층 구조:
+
+
 
 ### A. Module Level (모듈 레벨)
 - 각 HW 모듈의 펌웨어가 EtherCAT 네트워크 통신과 상태 측정 인터페이스 제공. 관절·바퀴 모듈 등 능동 모듈은 상위 레벨의 레퍼런스를 받아 구동하는 분산 제어기를 포함.
 
 ### B. Middleware Level (미들웨어 레벨)
-- XBot(Muratore et al. 2020) 프레임워크 — 로보틱스 하드웨어의 다양성을 추상화하고 결정론적 hard RT 성능을 보장하는 플러그인 아키텍처. EtherCAT 마스터, RT 플러그인을 실행하는 **Plugin Handler**, non-RT 애플리케이션 레벨과의 통신을 담당하는 **Communication Handler**로 구성.
+- XBot(Muratore et al. 2020) 프레임워크 — 로보틱스 하드웨어의 다양성을 추상화하고 결정론적 hard RT 성능을 보장하는 플러그인 아키텍처. 
+- EtherCAT 마스터, RT 플러그인을 실행하는 **Plugin Handler**, non-RT 애플리케이션 레벨과의 통신을 담당하는 **Communication Handler**로 구성.
+ 
 - URDF/SRDF만 있으면 매니퓰레이터든 휴머노이드든 사족보행이든 동일한 표준 API(XBotInterface)를 제공하고, 토폴로지가 바뀌면(예: 기구학 체인 추가) API도 자동으로 그에 맞게 바뀜.
 
 ### C. Application Level (애플리케이션 레벨)

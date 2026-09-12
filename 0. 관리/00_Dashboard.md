@@ -1,3 +1,43 @@
+## 1. 개인 공부
+
+```dataviewjs
+const pages = dv.pages('"1. 개인 공부"')
+  .where(p => p.file.name !== "CLAUDE" && p.file.folder !== "1. 개인 공부")
+
+const groups = {}
+for (const p of pages) {
+  const folder = p.file.folder.split("/").pop()
+  if (!groups[folder]) groups[folder] = []
+  groups[folder].push(p)
+}
+
+for (const folder of Object.keys(groups).sort()) {
+  dv.header(3, folder)
+  const sorted = groups[folder].slice().sort((a, b) => a.file.name.localeCompare(b.file.name))
+  dv.list(sorted.map(p => p.file.link))
+}
+```
+
+## 2. 논문·프로젝트
+
+```dataviewjs
+const overviews = dv.pages('"2. 논문·프로젝트"')
+  .where(p => p.file.name === p.file.folder.split("/").pop())
+  .sort(p => p.file.folder)
+
+dv.list(overviews.map(p => p.file.link))
+```
+
+## 3. Paper review
+
+```dataviewjs
+const papers = dv.pages('"3. Paper review"')
+  .where(p => p.file.name === p.file.folder.split("/").pop())
+  .sort(p => p.file.name)
+
+dv.list(papers.map(p => p.file.link))
+```
+
 ## 전체 Todo
 `4. 일상`의 todo가 목록 맨 위로 오도록 정렬된다.
 
@@ -48,4 +88,3 @@ WHERE file.name != "00_Dashboard"
 SORT file.mtime DESC
 LIMIT 15
 ```
-
