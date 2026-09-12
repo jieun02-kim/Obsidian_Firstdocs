@@ -164,18 +164,48 @@ URDF
 	로봇의 기능적인 부분, 즉 '이 로봇의 어느 부위가 엔드 이펙터인가?', '어떤 관절들이 하나의 운동학적 체인을 이루는가?'와 같은 정보를 정의.	시스템이 로봇을 더 똑똑하게 이해하도록 도움
 
 ### C. Modelling and URDF/SRDF Generation (모델링 및 URDF/SRDF 생성)
-- 위 좌표계 규약으로 두 모듈 간 변환행렬 Tλ(k),k를 정의, 그래프 χ를 순회하며 Featherstone(2008)식 표기법으로 순기구학을 계산.
-- 그래프 φ(물리 바디=노드, 관절/물리적 연결=엣지)를 ROS 표준 포맷인 **URDF**로 1:1 매핑해 변환(link 요소 = 관성·시각·충돌 속성, joint 요소 = fixed/prismatic/revolute). end-effector·기구학 체인 등 의미정보는 MoveIt!의 **SRDF**로 별도 저장.
+§IV-B에서 도입한 좌표계 규약은 로봇의 물리 모델을 **명확하게(unequivocally)** 도출할 수 있게 해줌. 짝지어진 연결 인터페이스에 결부된 기준 프레임은 서로 일치(coincident)하므로, 연속된 두 모듈 간 **상대 기구학은 오직 부모 모듈의 파라미터에만 의존**함.
 
-고주파 실시간 제어 루프에서의 계산에 적합한 효율적인 동역학 라이브러리 구현체
-	KDL [34], Pinocchio [35], 또는 RBDL [36]과 같이 공간 대수 표기법(spatial algebra notation) [31]을 사용하는 라이브러리 존재
-	모든 모델 URDF 입력을 통해 주요 기구학 및 동역학 수치들을 계산할 수 있음
+**변환행렬 T_λ(k),k (식 1)**
+- Featherstone[31]의 kinematic tree 표기법을 따라, 인덱스 k인 모듈의 부모를 λ(k)로 표기.
+- 모듈 λ(k)와 k 사이의 변환행렬 T_λ(k),k는 두 모듈의 입력 포트 0에 연결된 프레임 {f^λ(k)_0}와 {f^k_0} 사이의 변환으로 정의:
+  > T_λ(k),k = T_{f^λ(k)_0, f^k_0} = T_{f^λ(k)_0, f^λ(k)_pout} · T_{f^λ(k)_pout, f^k_0} = T^λ(k)_{0,pout}   ...(1)
+  (마지막 항 T_{f^λ(k)_pout, f^k_0}은 두 EMI가 일치하므로 항등행렬 I이 되어 소거됨)
+- 여기서 T^λ(k)_{0,pout} ∈ SE(3)이고, pout ∈ {0,1,2,3}는 다음 모듈이 연결된 (부모 모듈의) 출력 포트 번호. End-Effector 모듈일 때만 더미값 0을 가짐.
+- 즉 그래프 χ의 임의 노드 k에 대한 변환은 **오직 부모 노드 λ(k)와 그 사이의 엣지(=pout 값을 내포)에만 의존** — 따라서 두 모듈 a, b 사이의 상대 순기구학은 그래프를 a에서부터 순회하며 식(1)을 b에 도달할 때까지 반복 호출해 계산 가능.
 
+**모듈별 기구학 (식 2)**
+- [5], [32] 같은 알고리즘으로 전체 순기구학 모델을 얻을 수 있음. 임의 모듈 k의 모듈러 기구학은 모듈 타입에 따라 다음과 같이 정의:
+  > T^k_{0,pout} = T^k_{0,j} · e^(ŝ^k_j · q_k) · T^k_{j,pout},  (type = Joint)
+  > T^k_{0,pout} = T^k_{0,pout},  (type = Link, Base)
+  > T^k_{0,pout} = T^k_{0,tcp},  (type = End-Effector)   ...(2)
+- 각 변환행렬의 의미: T^k_{0,j}는 {f^k_0}→{jf^k}(Joint 모듈의 **근위부(proximal)**), T^k_{j,pout}는 {jf^k}→{f^k_pout}(**원위부(distal)**), T^k_{0,pout}는 Link/Base 모듈의 입력포트(0)~출력포트 간, T^k_{0,tcp}는 End-Effector 모듈의 입력포트~TCP 간 변환.
+- q_k는 모듈 k의 관절 변위. ŝ^k_j ∈ se(3)는 프레임 {f^k_j}에서 표현된 모듈 k 관절의 트위스트(twist). 트위스트 좌표를 나타내는 6차원 벡터 s^k_j는 상수이며, **회전(revolute) 관절**은 s^k_j = [0,0,0,0,0,1]ᵀ, **직동(prismatic) 관절**은 s^k_j = [0,0,1,0,0,0]ᵀ.
 
-
+**그래프 φ 생성 및 URDF/SRDF 변환**
+- 그래프 χ를 순회하며 각 노드에 식(2)와 DB에서 가져온 데이터를 적용해 확장 → 트리형 그래프 **φ**를 얻음. 예를 들어 Joint 모듈 노드 하나는 근위부·원위부 바디를 나타내는 두 노드로 확장되고, 그 사이는 구동되는 관절(actuated joint)을 나타내는 엣지로 연결됨. 노드는 각 움직이는 바디의 동역학 파라미터를, 엣지는 바디 간 변환을 저장 — 이는 OIM[26]이나 AIM[27]으로 더 압축된 형태로 변환 가능.
+- ROS 기반 라이브러리의 사실상 표준(de-facto standard)인 **URDF**(XML 포맷)를 고려해, 그래프 φ를 URDF 파일로 변환 — 로봇을 일련의 **link 요소**(관성·시각·충돌 속성으로 구성)가 **fixed/prismatic/revolute joint 요소**로 연결된 형태로 표현. φ의 노드·엣지와 URDF XML 요소 사이의 매핑은 **1:1**.
+- 두 링크 간(예: 연속된 두 Joint 모듈의 원위부-근위부) **정적인 물리적 연결**은 fixed joint 요소로 표현되며, 합성된 바디(composite body)의 동역학 파라미터 계산은 사용하는 동역학 라이브러리의 URDF 파서에 맡김.
+- 로봇의 의미론적 정보(엔드 이펙터, 운동학적 체인 및 이를 구성하는 조인트에 대한 설명 등)는 URDF를 보완하기 위해 MoveIt! 프레임워크[33]가 도입한 **SRDF**(Semantic Robot Description Format) 파일에 별도로 작성.
+  - **URDF**: 로봇의 질량, 관성, 링크 간 연결 관계 등 기하학적·물리적 모델링에 집중.
+  - **SRDF**: '이 로봇의 어느 부위가 엔드 이펙터인가?', '어떤 관절들이 하나의 운동학적 체인을 이루는가?' 같은 기능적 정보를 정의 — 시스템이 로봇을 더 잘 이해하도록 도움.
 
 ### D. Kinematic and Dynamic Algorithms (기구학·동역학 알고리즘)
-- KDL/Pinocchio/RBDL 같은 spatial-algebra 기반 동역학 라이브러리(본 논문은 RBDL 사용)로 URDF에서 수치적으로 기구학·동역학량 계산: **RNEA**(역동역학, Coriolis-원심력·중력 항 계산), **ABA**(순동역학), **CRBA**(질량행렬 계산).
+- 선택한 동역학 라이브러리는 URDF로부터 기구학·동역학 모델을 **명확하게(unequivocally)** 도출. 고빈도(high-frequency) 실시간 제어 루프 계산에 적합한, **spatial algebra 표기법**[31]을 사용하는 효율적인 라이브러리 구현체로 **KDL**[34], **Pinocchio**[35], **RBDL**[36]이 있음. 본 논문의 현재 구현은 RBDL을 사용했으나, 이 라이브러리들 모두 URDF 입력으로부터 주요 기구학·동역학 수치를 수치적으로 계산 가능.
+
+- 구현된 강체 동역학(rigid body dynamics) 기술 알고리즘 3가지:
+  - **역동역학(Inverse Dynamics) / Recursive Newton-Euler Algorithm (RNEA)**:
+    > τ = RNEA(model, q, q̇, q̈) = M(q)q̈ + n(q, q̇)   ...(3)
+  - **순동역학(Forward Dynamics) / Articulated Body Algorithm (ABA)**:
+    > q̈ = ABA(model, q, q̇, τ)   ...(4)
+  - **Composite Rigid Body Algorithm (CRBA)**:
+    > M(q) = CRBA(model, q)   ...(5)
+  - 여기서 model은 URDF를 파싱해 얻은 데이터 구조.
+- 특히 §VI-C에서 구현한 컨트롤러에서는 **RNEA**로 Coriolis-원심력·중력 항 n을 계산하고, **CRBA**로 매니퓰레이터 질량행렬 M을 계산. 점 야코비안(point Jacobian), 가속도, 속도 등 다른 물리량도 [31]의 방식대로 모델 구조에서 계산 가능.
+
+
+
+
 
 
 
