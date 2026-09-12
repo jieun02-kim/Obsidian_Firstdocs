@@ -1,10 +1,10 @@
 ---
 type: literature
-source: "Toward a Plug-and-Work Reconfigurable Cobot. IEEE/ASME Transactions on Mechatronics, 2022년 10월."
-author: "Edoardo Romiti, Jörn Malzahn, Navvab Kashiri, Francesco Iacobelli, Marco Ruzzon, Arturo Laurenzi, Enrico Mingo Hoffman, Luca Muratore, Alessio Margan, Lorenzo Baccelliere, Stefano Cordasco, Nikos Tsagarakis"
+source: Toward a Plug-and-Work Reconfigurable Cobot. IEEE/ASME Transactions on Mechatronics, 2022년 10월.
+author: Edoardo Romiti, Jörn Malzahn, Navvab Kashiri, Francesco Iacobelli, Marco Ruzzon, Arturo Laurenzi, Enrico Mingo Hoffman, Luca Muratore, Alessio Margan, Lorenzo Baccelliere, Stefano Cordasco, Nikos Tsagarakis
 year: 2022
-venue: "IEEE/ASME Transactions on Mechatronics"
-impact_factor: "확인 필요"
+venue: IEEE/ASME Transactions on Mechatronics
+impact_factor: 확인 필요
 tags:
   - plug-and-work
   - cobot
@@ -15,7 +15,7 @@ tags:
   - urdf-generation
   - whole-body-control
 project: "[[KIST IDS 사업 과제]]"
-created: 2026-08-31
+created: 2025-08-31
 updated: 2026-09-10
 ---
 
@@ -177,6 +177,9 @@ URDF
 ### D. Kinematic and Dynamic Algorithms (기구학·동역학 알고리즘)
 - KDL/Pinocchio/RBDL 같은 spatial-algebra 기반 동역학 라이브러리(본 논문은 RBDL 사용)로 URDF에서 수치적으로 기구학·동역학량 계산: **RNEA**(역동역학, Coriolis-원심력·중력 항 계산), **ABA**(순동역학), **CRBA**(질량행렬 계산).
 
+
+
+
 ## V. Reconfigurable Software Architecture (재구성 가능한 소프트웨어 아키텍처)
 하드웨어의 재구성 가능성을 활용하려면 SW도 새 토폴로지에 자동으로 적응해야 함
 새로운 컨트롤러를 정의하거나 사용자의 입력 및 튜닝 없이도 필요한 모든 API에 접근할 수 있게
@@ -189,21 +192,56 @@ URDF
 - 각 HW 모듈의 펌웨어가 EtherCAT 네트워크 통신과 상태 측정 인터페이스 제공. 관절·바퀴 모듈 등 능동 모듈은 상위 레벨의 레퍼런스를 받아 구동하는 분산 제어기를 포함.
 
 ### B. Middleware Level (미들웨어 레벨)
-- XBot(Muratore et al. 2020) 프레임워크 — 로보틱스 하드웨어의 다양성을 추상화하고 결정론적 hard RT 성능을 보장하는 플러그인 아키텍처. 
-- EtherCAT 마스터, RT 플러그인을 실행하는 **Plugin Handler**, non-RT 애플리케이션 레벨과의 통신을 담당하는 **Communication Handler**로 구성.
- 
+- XBot(Muratore et al. 2020) [37] 프레임워크 — 로보틱스 하드웨어의 다양성을 추상화하고 결정론적 hard RT 성능을 보장하는 플러그인 아키텍처. 
+- EtherCAT 마스터
+- RT 플러그인을 실행하는 **Plugin Handler**
+	서로 다른 RT플러그인 실행, 순차적인 처리
+	어플리케이션 계층으로의 통신을 조직화
+- non-RT 애플리케이션 레벨과의 통신을 담당하는 **Communication Handler**로 구성.
+- XBotInterface
+	  물리적 토폴로지 인식을 통해 얻은 모델 설명을 기반으로 생성된 RT 및 비실시간(non-RT) API를 제공
+
+
+Robot Interface (로봇 인터페이스)
+
+역할: 로봇의 실시간 상태 데이터를 관리하고 입출력(I/O) 명령을 전달하는 통로입니다.
+설명: EtherCAT 마스터를 통해 하위 모듈(Slave)들로부터 전달받은 관절 위치(Joint Position), 속도(Velocity), 토크(Torque) 등의 실시간 상태값을 추상화합니다. 상위 애플리케이션이나 CartesI/O와 같은 라이브러리가 로봇의 실제 하드웨어 상세 정보를 알지 못해도 이 인터페이스를 통해 일관된 방식으로 데이터를 읽고 명령을 보낼 수 있게 합니다.
+
+
+Model Interface (모델 인터페이스)
+
+역할: 생성된 로봇의 수학적 모델(Kinematic & Dynamic Model) 정보를 관리하고 제공합니다.
+설명: 첫 번째 계층에서 감지된 토폴로지 정보를 바탕으로 자동 생성된 URDF/SRDF 파일을 해석(Parsing)합니다. 로봇의 기구학(Kinematics, 예: Jacobian 행렬) 및 동역학(Dynamics, 예: 질량 행렬, 중력 보상 항) 데이터를 실시간으로 계산하여 제공합니다. 이를 통해 제어기는 재구성된 로봇의 관성이나 질량 분포 변화를 정확히 파악하여, 물리적인 구조가 바뀌더라도 Impedance control과 같은 제어 법칙이 안정적으로 작동하도록 합니다.
+
+
+![[Pasted image 20260912195746.png]]
+-  EtherCAT Master : 중앙 소프트웨어 컴포넌트와 모듈 펌웨어 레벨에 구현된 탈중앙화 컴포넌트 사이의 양방향 통신 실현
+- Plugin Handler : 여러 RT 플러그인 순착적으로 실행/관리
+- Communication Handler : 상위 비실시간 레이어(애플리케이션 레벨)과의 통신을 조율
+- XBotInterface : 물리적 토폴로지의 인식을 통해 얻어진 모델 설명을 기반으로 생성되는 RT/non-RT API제공
+
+
 - URDF/SRDF만 있으면 매니퓰레이터든 휴머노이드든 사족보행이든 동일한 표준 API(XBotInterface)를 제공하고, 토폴로지가 바뀌면(예: 기구학 체인 추가) API도 자동으로 그에 맞게 바뀜.
 
 ### C. Application Level (애플리케이션 레벨)
-- non-RT 스레드에서 실행되는 SW 레벨. ROS 프레임워크 인터페이스가 XBot에 내장되어 사용자·서드파티 ROS 노드와 통합 가능.
-- CartesI/O 라이브러리가 Cartesian 공간 레퍼런스 궤적을 자동 생성하는 ROS API를 제공, XBot RT 플러그인 안에서 hard RT 제어 루프로 실행.
-- 이 레벨의 재구성 가능성은 본질적(intrinsic) — 애플리케이션이 임의의 시점에 실행/종료되며 Communication Handler에 요청을 보내는 방식으로 하위 레벨과 상호작용.
+- non-RT 스레드에서 실행되는 SW 레벨.
+- ROS 프레임워크 인터페이스가 XBot에 내장되어 사용자·서드파티 ROS 노드와 통합 가능.
+
+- CartesI/O 라이브러리
+	Cartesian 공간 레퍼런스 궤적을 자동 생성하는 ROS API를 제공, XBot RT 플러그인 안에서 hard RT 제어 루프로 실행.
+
+- 이 레벨의 재구성 가능성은 본질적(intrinsic)
+  애플리케이션이 임의의 시점에 실행/종료되며 Communication Handler에 요청을 보내는 방식으로 하위 레벨과 상호작용.
+
 
 ## VI. Reconfigurable Centralized Control (재구성 가능한 중앙집중형 제어)
-Interaction·force·impedance 등 안전 필수 중앙집중형 컨트롤러는 미들웨어의 RT 플러그인으로 실행되며, 로봇의 물리적 토폴로지가 바뀌어도 동역학적 한계를 지키며 안정적이어야 함 — 즉 제어 아키텍처에도 재구성 가능성이 필요.
+Interaction·force·impedance 등 안전 필수 중앙집중형 컨트롤러는 미들웨어의 RT 플러그인으로 실행되며, 로봇의 물리적 토폴로지가 바뀌어도 동역학적 한계를 지키며 안정적이어야 함
+즉 제어 아키텍처에도 재구성 가능성이 필요.
 
 ### A. Optimisation-based Control (최적화 기반 제어)
-- OpenSoT 라이브러리(QP 기반 **Stack of Tasks**)를 사용해 여러 태스크를 동시에 실행하고 복잡한 전신 동작을 구현. 태스크는 가중 최소자승 비용함수로, 제약은 선형 부등식으로 정식화. 태스크는 soft priority(비용함수 가중합)나 hard priority(널스페이스 투영 등)로 동시 실행 가능.
+- OpenSoT 라이브러리(QP 기반 **Stack of Tasks**)
+	- 여러 태스크를 동시에 실행하고 복잡한 전신 동작을 구현.
+- 태스크는 가중 최소자승 비용함수로, 제약은 선형 부등식으로 정식화. 태스크는 soft priority(비용함수 가중합)나 hard priority(널스페이스 투영 등)로 동시 실행 가능.
 
 ### B. Controller Reconfiguration Principle (컨트롤러 재구성 원리)
 - 자유도가 추가/제거되면 제약 행렬의 열(column) 수만 바뀔 뿐 — **즉 컨트롤러 재구성은 수학적으로 비용함수·제약 행렬에 행/열을 추가·삭제하는 것과 동치**. OpenSoT가 자동 발견된 토폴로지와 사용자 정의 Stack of Tasks로부터 컨트롤러 수식을 자동 조립하므로, 모듈이 추가돼도 사용자가 태스크를 직접 갱신할 필요 없음(예: end-effector task frame이 새 위치로 자동 이동).
